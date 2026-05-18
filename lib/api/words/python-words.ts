@@ -1,0 +1,23 @@
+
+export const pythonWords: string[] = [
+    "decorator",
+    "generator",
+    "iterator",
+    "lambda",
+    "asyncio",
+    "pandas",
+    "virtualenv",
+    "dataclass",
+    "comprehension",
+    "traceback",
+    "serialization",
+    "threading",
+    "multiprocessing",
+    "package",
+    "dependency",
+    "pytest",  
+    "pipenv",
+    "numpy",
+    "inheritance",
+    "encapsulation",
+]

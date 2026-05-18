@@ -1,0 +1,23 @@
+
+export const cssWords: string[] = [
+    "selector",
+    "flexbox",
+    "grid",
+    "animation",
+    "transition",
+    "transform",
+    "responsive",
+    "mediaquery",
+    "pseudoclass",
+    "specificity",
+    "zindex",
+    "overflow",
+    "padding",
+    "margin",
+    "typography",
+    "keyframes",
+    "viewport",
+    "variable",
+    "tailwind",
+    "stylesheet",
+]

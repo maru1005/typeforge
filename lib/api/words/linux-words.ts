@@ -1,0 +1,23 @@
+
+export const linuxWords:string[] = [
+    "terminal",
+    "kernel",
+    "process",
+    "daemon",
+    "permission",
+    "symlink",
+    "filesystem",
+    "grep",
+    "awk",
+    "sed",
+    "ssh",
+    "cron",
+    "systemctl",
+    "package",
+    "bash",
+    "pipeline",
+    "environment",
+    "container",
+    "virtualization",
+    "mount",
+]

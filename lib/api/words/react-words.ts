@@ -1,0 +1,26 @@
+
+
+export const reactWords: string[] = [
+  "useState",
+  "useEffect",
+  "useCallback",
+  "component",
+  "props",
+  "state",
+  "hooks",
+  "useState",
+  "useEffect",
+  "context",
+  "reducer",
+  "dispatch",
+  "useMemo",
+  "ref",
+  "fragment",
+  "hydration",
+  "suspense",
+  "router",
+  "rendering",
+  "virtualdom",
+  "reconciliation",
+  "lifecycle",
+];

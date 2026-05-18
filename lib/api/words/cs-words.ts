@@ -1,0 +1,23 @@
+
+export const csWords:string[] = [
+    "algorithm",
+    "datastructure",
+    "recursion",
+    "abstraction",
+    "encapsulation",
+    "polymorphism",
+    "inheritance",
+    "complexity",
+    "optimization",
+    "compilation",
+    "concurrency",
+    "encryption",
+    "networking",
+    "database",
+    "caching",
+    "synchronization",
+    "scalability",
+    "virtualization",
+    "automata",
+    "computation",
+]
