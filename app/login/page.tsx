@@ -1,4 +1,5 @@
 // app/lgoin/page.tsx
+// ログインページ
 
 "use client";
 
