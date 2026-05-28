@@ -84,8 +84,22 @@ export default function GamePage() {
   useEffect(() => {
     if (timeLeft <= 0 && status === "playing") {
       endGame();
+
+      const saveScore = async () => {
+        await fetch("api/scores", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            score,
+            correct_count: correctCount,
+            miss_count: missCount,
+          }),
+        });
+      };
+
+      saveScore();
     }
-  }, [status, endGame, timeLeft]);
+  }, [status, endGame, timeLeft, score, correctCount, missCount]);
 
   return (
     <div>
