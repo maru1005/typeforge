@@ -6,7 +6,7 @@ import CategorySelect from "@/app/components/category-select";
 export default async function SelectPage() {
   const supabase = await createClient();
 
-  const { data: scores, error } = await supabase
+  const { data: scores } = await supabase
     .from("scores")
     .select("id, score, correct_count, miss_count, created_at, user_id")
     .order("score", { ascending: false })
