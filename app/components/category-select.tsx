@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Category } from "@/types";
 import { useGameStore } from "@/store/game-store";
@@ -22,6 +22,19 @@ export default function CategorySelect() {
   const router = useRouter();
   const setCategory = useGameStore((state) => state.setCategory);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (countdown === null) return;
+    if (countdown === 0) {
+      router.push("/game");
+      return;
+    }
+    const timer = setTimeout(() => {
+      setCountdown((c) => c! - 1);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [countdown, router]);
 
   const handleSelect = (category: Category) => {
     setCategory(category);
@@ -30,7 +43,7 @@ export default function CategorySelect() {
 
   const handleStart = () => {
     setIsModalOpen(false);
-    router.push("/game");
+    setCountdown(3);
   };
 
   return (
@@ -45,6 +58,11 @@ export default function CategorySelect() {
         <div>
           <p>ルール説明</p>
           <button onClick={handleStart}>Start</button>
+        </div>
+      )}
+      {countdown !== null && (
+        <div>
+          <p>{countdown}</p>
         </div>
       )}
     </div>
