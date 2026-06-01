@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Category } from "@/types";
 import { useGameStore } from "@/store/game-store";
+import { createClient } from "@/lib/api/supabase/client";
 
 const categories: { label: string; value: Category }[] = [
   { label: "Random", value: "random" },
@@ -46,6 +47,8 @@ export default function CategorySelect() {
     setCountdown(3);
   };
 
+  const supabase = createClient();
+
   return (
     <div>
       {categories.map((cat) => (
@@ -60,11 +63,21 @@ export default function CategorySelect() {
           <button onClick={handleStart}>Start</button>
         </div>
       )}
+
       {countdown !== null && (
         <div>
           <p>{countdown}</p>
         </div>
       )}
+
+      <button
+        onClick={async () => {
+          await supabase.auth.signOut();
+          router.push("/login");
+        }}
+      >
+        ログアウト
+      </button>
     </div>
   );
 }
