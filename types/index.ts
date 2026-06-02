@@ -11,6 +11,7 @@ export type Score = {
     user_id: string;
     correct_count: number;
     miss_count: number;
+    score: number;
     created_at: string;
 };
 

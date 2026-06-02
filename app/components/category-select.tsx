@@ -47,37 +47,67 @@ export default function CategorySelect() {
     setCountdown(3);
   };
 
-  const supabase = createClient();
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/login");
+  };
 
   return (
     <div>
-      {categories.map((cat) => (
-        <button key={cat.value} onClick={() => handleSelect(cat.value)}>
-          {cat.label}
-        </button>
-      ))}
-
-      {isModalOpen && (
-        <div>
-          <p>ルール説明</p>
-          <button onClick={handleStart}>Start</button>
-        </div>
-      )}
-
-      {countdown !== null && (
-        <div>
-          <p>{countdown}</p>
-        </div>
-      )}
+      <div className="grid grig-cols-2 sm:grid-clos-4">
+        {categories.map((cat) => (
+          <button
+            key={cat.value}
+            onClick={() => handleSelect(cat.value)}
+            className="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-indigo-50 hover:border-indigo-300 transition-colors"
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
 
       <button
-        onClick={async () => {
-          await supabase.auth.signOut();
-          router.push("/login");
-        }}
+        onClick={handleLogout}
+        className="mt=6 text-xs text-slate-400 hover:text-slate-600"
       >
         ログアウト
       </button>
+
+      {/* カウントダウン */}
+      {countdown !== null && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="text-white text-8zl font-bold">
+            {countdown === 0 ? "GO!" : countdown}
+          </div>
+        </div>
+      )}
+
+      {/* スタートモーダル */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-40"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ul className="text-sm text-slate-600 space-y-2">
+              <li>⏰ 初期時間：30秒</li>
+              <li>✅ 正解：+2秒 / +10pt</li>
+              <li>❌ ミス：-1秒 / -1pt</li>
+              <li>📝 単語5つ同時表示</li>
+            </ul>
+            <button
+              onClick={handleStart}
+              className="w-full bg-indigo-600 text-wthite py-3 rounded-xl font-bold hover:bg-indigo-700 transition-colors"
+            >
+              Start
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
