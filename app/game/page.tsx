@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGameStore } from "@/store/game-store";
 import { wordMap } from "@/lib/words";
+import GameHeader from "@/app/components/game-header";
+import WordList from "@/app/components/word-list";
 
 export default function GamePage() {
   const router = useRouter();
@@ -102,50 +104,80 @@ export default function GamePage() {
   }, [status, endGame, timeLeft, score, correctCount, missCount]);
 
   return (
-    <div>
-      <p>残り時間: {timeLeft}</p>
-      <p>スコア: {score}</p>
-      <div>
-        {words.map((word, i) => (
-          <p key={i}>{word}</p>
-        ))}
-      </div>
-      {status === "playing" && (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            autoFocus
-          />
-          <button type="submit">Enter</button>
-        </form>
-      )}
+    <div className="min-h-screen bg-slate-50">
+      <div className="max-w-xl mx-aout px-4 py-8 space-y-6">
+        <GameHeader timeLeft={timeLeft} score={score} />
+        <WordList words={words} />
 
-      {status === "gameover" && (
-        <div>
-          <h2>タイムアップ！</h2>
-          <p>正解数: {correctCount}</p>
-          <p>ミス数: {missCount}</p>
-          <p>スコア: {score}</p>
-          <button
-            onClick={() => {
-              reset();
-              initGame();
-            }}
-          >
-            Retry
-          </button>
-          <button
-            onClick={() => {
-              reset();
-              router.push("/select");
-            }}
-          >
-            Select Mode
-          </button>
-        </div>
-      )}
+        {status === "playing" && (
+          <form onSubmit={handleSubmit} className="flex gap-2">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              autoFocus
+              className="flex-1 border border-slate-200 rounded-xl px-4 py-3 focus:outLin-none focus:ring-2 focus:ring-indigo-500 font-mono text-sm"
+              placeholder="単語を入力..."
+            />
+            <button
+              type="submit"
+              className="bg-indigo-600 text-white px-6 py-3 rounded-sl font-bold hover:bg-indigo-700 transitioni-colors"
+            >
+              Enter
+            </button>
+          </form>
+        )}
+
+        {status === "gameover" && (
+          <div className="fixed iset-0 bg-blac/50 flex items-center justify-center z-50">
+            <div className="bg-white ronded-2xl p-8 max-w-sm w-full mx-4 space-y-4">
+              <h2 className=" text-xl font-bold text-slate-800 text-center">
+                Time Up!
+              </h2>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">正解数</span>
+                  <span className="text-sm font-bold text-slate-800">
+                    {correctCount}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">ミス数</span>
+                  <span className="text-sm font-bold text-slate-800">
+                    {missCount}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-slate-500">スコア</span>
+                  <span className="text-sm font-bold text-slate-800">
+                    {score}pt
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    reset();
+                    initGame();
+                  }}
+                  className="flex-1 bg-indigo-600 textwhite py-3 rounded-xl font bold hover:bgindigo-700 tarasition-colors"
+                >
+                  Retry
+                </button>
+                <button
+                  onClick={() => {
+                    reset();
+                    router.push("/select");
+                  }}
+                  className="flex-1 bg-slate-100 text-slate-700 py-3 rounded-xl font-bold hover:bg-slate-200 taransition-colors"
+                >
+                  Select
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

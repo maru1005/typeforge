@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/api/supabase/server";
 import CategorySelect from "@/app/components/category-select";
+import Ranking from "@/app/components/ranking";
 
 export default async function SelectPage() {
   const supabase = await createClient();
@@ -16,22 +17,20 @@ export default async function SelectPage() {
 
   const { data: profiles } = await supabase
     .from("profiles")
-    .select("user_id, username")
+    .select("id, user_id, username")
     .in("user_id", userIds);
 
   return (
-    <div>
-      <CategorySelect />
-      <div>
-        {scores?.map((score) => {
-          const profile = profiles?.find((p) => p.user_id === score.user_id);
-          return (
-            <div key={score.id}>
-              <p>{profile?.username}</p>
-              <p>{score.score}</p>
-            </div>
-          );
-        })}
+    <div className="min-h-screen bg-slate-50">
+      <div className="max-w-2xl mx-auto px-4 py-12 space-y-10">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-slate-800">TypeForge</h1>
+          <p className="text-slate-500 mt-1 text-sm">
+            カテゴリを選んでスタート
+          </p>
+        </div>
+        <CategorySelect />
+        <Ranking scores={scores ?? []} profiles={profiles ?? []} />
       </div>
     </div>
   );
