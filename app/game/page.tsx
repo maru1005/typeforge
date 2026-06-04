@@ -106,7 +106,7 @@ export default function GamePage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-xl mx-aout px-4 py-8 space-y-6">
-        <GameHeader timeLeft={timeLeft} score={score} />
+        <GameHeader timeLeft={timeLeft} score={score} status={status} />
         <WordList words={words} />
 
         {status === "playing" && (
