@@ -9,9 +9,11 @@ export default async function SelectPage() {
 
   const { data: scores } = await supabase
     .from("scores")
-    .select("id, score, correct_count, miss_count, created_at, user_id")
+    .select(
+      "id, score, correct_count, miss_count, created_at, user_id, category",
+    )
     .order("score", { ascending: false })
-    .limit(10);
+    .limit(5);
 
   const userIds = scores?.map((s) => s.user_id) ?? [];
 
@@ -29,8 +31,14 @@ export default async function SelectPage() {
             カテゴリを選んでスタート
           </p>
         </div>
-        <CategorySelect />
-        <Ranking scores={scores ?? []} profiles={profiles ?? []} />
+        <div className="flex gap-8">
+          <div className="w-64 flex shrink-0">
+            <CategorySelect />
+          </div>
+          <div className="flex-1">
+            <Ranking scores={scores ?? []} profiles={profiles ?? []} />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ export type Score = {
     miss_count: number;
     score: number;
     created_at: string;
+    category: string | null;
 };
 
 export type Category = "random" | "react" | "go" | "python" | "css" | "linux" | "cs" | "tailwind";

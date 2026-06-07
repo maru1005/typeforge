@@ -27,13 +27,14 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { score, correct_count, miss_count } = await request.json();
+    const { score, correct_count, miss_count, category } = await request.json();
 
     const { error } = await supabase.from("scores").insert({
         user_id: user.id,
         score,
         correct_count,
         miss_count,
+        category
     });
 
     if (error) {
