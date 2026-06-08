@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/api/supabase/server";
 import CategorySelect from "@/app/components/category-select";
 import Ranking from "@/app/components/ranking";
+import LogoutButton from "../components/logout-button";
 
 export default async function SelectPage() {
   const supabase = await createClient();
@@ -25,11 +26,14 @@ export default async function SelectPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-2xl mx-auto px-4 py-12 space-y-10">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-slate-800">TypeForge</h1>
-          <p className="text-slate-500 mt-1 text-sm">
-            カテゴリを選んでスタート
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-800">TypeForge</h1>
+            <p className="text-slate-500 mt-1 text-sm">
+              カテゴリを選んでスタート
+            </p>
+          </div>
+          <LogoutButton />
         </div>
         <div className="flex gap-8">
           <div className="w-64 flex shrink-0">

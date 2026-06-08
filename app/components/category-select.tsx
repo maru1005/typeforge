@@ -49,12 +49,6 @@ export default function CategorySelect() {
     setCountdown(3);
   };
 
-  const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push("/login");
-  };
-
   return (
     <div>
       <div className="relative flex flex-col gap-2">
@@ -85,13 +79,6 @@ export default function CategorySelect() {
           </button>
         ))}
       </div>
-
-      <button
-        onClick={handleLogout}
-        className="mt-6 text-xs text-slate-400 hover:text-slate-600"
-      >
-        ログアウト
-      </button>
 
       {/* カウントダウン */}
       {countdown !== null && (
