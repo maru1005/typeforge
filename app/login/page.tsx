@@ -58,7 +58,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
       <div className="flex flex-col md:flex-row items-center gap-8 w-full max-w-3xl">
-        <div className="flex shrink-0">
+        <div className="shrink-0 flex flex-col items-center gap-0">
+          <h1 className="text-3xl font-bold text-slate-800">PawType🐾</h1>
           <Image
             src="/cats/cat-blink.gif"
             alt="cat"
@@ -70,10 +71,6 @@ export default function LoginPage() {
         </div>
 
         <div className="w-full max-w-sm space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-slate-800">TypeForge</h1>
-          </div>
-
           <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-4">
             {isSignUp ? (
               <form
