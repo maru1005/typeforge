@@ -37,7 +37,7 @@ export default function GamaeHeader({
   }, [status]);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-6">
       {/* Exit 表示Time Score */}
       <div className="flex item-center justify-between">
         <button

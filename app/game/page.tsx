@@ -33,29 +33,6 @@ export default function GamePage() {
   const [input, setInput] = useState("");
   const [gameKey, setGameKey] = useState(0);
 
-  const handleSubmit = (e: React.SubmitEvent) => {
-    e.preventDefault();
-
-    if (words.includes(input)) {
-      addCorrect();
-
-      const newWords = words.filter((word) => word !== input);
-
-      const allWords = wordMap[category!];
-      const remaining = allWords.filter((word) => !words.includes(word));
-      const next = remaining[Math.floor(Math.random() * remaining.length)];
-
-      if (next) {
-        setWords([...newWords, next]);
-      } else {
-        setWords(newWords);
-      }
-    } else {
-      addMiss();
-    }
-    setInput("");
-  };
-
   // 初期化処理
   const initGame = () => {
     if (!category) {
@@ -64,7 +41,7 @@ export default function GamePage() {
     }
     const allWords = wordMap[category];
     const shuffled = [...allWords].sort(() => Math.random() - 0.5);
-    setWords(shuffled.slice(0, 3));
+    setWords(shuffled.slice(0, 1));
     startGame();
   };
 
@@ -105,35 +82,54 @@ export default function GamePage() {
     }
   }, [status, endGame, timeLeft, score, correctCount, missCount, category]);
 
+  // 入力処理
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const target = words[0];
+
+    if (!target.startsWith(value)) {
+      addMiss();
+      return;
+    }
+
+    setInput(value);
+
+    if (value === target) {
+      addCorrect();
+      const allWords = wordMap[category!];
+      const remaining = allWords.filter((word) => !words.includes(word));
+      const next = remaining[Math.floor(Math.random() * remaining.length)];
+      setWords(next ? [next] : []);
+      setInput("");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 py-8 space-y-10">
         <GameHeader
           key={gameKey}
           timeLeft={timeLeft}
           score={score}
           status={status}
         />
-        <WordList words={words} />
 
-        {status === "playing" && (
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              autoFocus
-              className="flex-1 border border-slate-200 rounded-xl px-4 py-3 focus:outlin-none focus:ring-2 focus:ring-indigo-500 font-mono text-sm"
-              placeholder="単語を入力..."
-            />
-            <button
-              type="submit"
-              className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-colors"
-            >
-              Enter
-            </button>
-          </form>
-        )}
+        <div className="bg-white rounded-3xl border-2 border-slate-200 p-8 text-center space-y-6 max-w-2xl mx-auto">
+          <WordList words={words} />
+          <div className="flex items-center gap-2 max-w-md mx-auto border-b-2 border-slate-300 pb-2">
+            <span>✏️</span>
+            {status === "playing" && (
+              <input
+                type="text"
+                value={input}
+                onChange={handleChange}
+                autoFocus
+                className="w-full max-w-lg px-4 py-3 font-mono text-sm text-center bg-transparent focus:outline-none"
+                placeholder=""
+              />
+            )}
+          </div>
+        </div>
 
         {status === "gameover" && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -165,6 +161,7 @@ export default function GamePage() {
                 <button
                   onClick={() => {
                     reset();
+                    setInput("");
                     setGameKey((k) => k + 1);
                     initGame();
                   }}

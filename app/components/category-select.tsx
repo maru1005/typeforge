@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Category } from "@/types";
 import { useGameStore } from "@/store/game-store";
-import { createClient } from "@/lib/api/supabase/client";
+
 import Image from "next/image";
 
 const categories: { label: string; value: Category }[] = [
@@ -103,7 +103,7 @@ export default function CategorySelect() {
               <li>⏰ 初期時間：30秒</li>
               <li>✅ 正解：+2秒 / +10pt</li>
               <li>❌ ミス：-1秒 / -1pt</li>
-              <li>📝 単語3つ同時表示</li>
+              <li>📝 半角にしてStart!</li>
             </ul>
             <button
               onClick={handleStart}
