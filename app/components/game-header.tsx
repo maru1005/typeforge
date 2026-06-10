@@ -19,6 +19,7 @@ export default function GamaeHeader({
   status,
 }: GameHeaderProps) {
   const router = useRouter();
+  const [direction, setDirection] = useState(1); // 1=right
   const [catPosition, setCatPosition] = useState(40);
   const [pawPrints, setPawParints] = useState<number[]>([]);
   const catPos = status === "idle" ? 40 : catPosition;
@@ -28,13 +29,23 @@ export default function GamaeHeader({
     if (status !== "playing") return;
     const interval = setInterval(() => {
       setCatPosition((prev) => {
-        const next = prev + 70;
+        const next = prev + 70 * direction;
+        if (next > 800) {
+          setDirection(-1);
+          setPawParints([]);
+          return prev;
+        }
+        if (next < 0) {
+          setDirection(1);
+          setPawParints([]);
+          return prev;
+        }
         setPawParints((prints) => [...prints, prev]);
         return next;
       });
     }, 3000);
     return () => clearInterval(interval);
-  }, [status]);
+  }, [status, direction]);
 
   return (
     <div className="space-y-6">
@@ -80,7 +91,10 @@ export default function GamaeHeader({
         {/* 猫 */}
         <div
           className="absolute top-1/2 -translate-y-1/2 transition-all duration-500"
-          style={{ left: `${catPos}px` }}
+          style={{
+            left: `${catPos}px`,
+            transform: direction === -1 ? "scaleX(-1)" : "none",
+          }}
         >
           <Image
             src={
