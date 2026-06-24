@@ -48,10 +48,16 @@ export default function LoginPage() {
       alert(error.message);
       return;
     }
-    await supabase.from("profiles").insert({
+    
+    const { error: profileError } = await supabase.from("profiles").insert({
       user_id: authData.user!.id,
       username: data.username,
     });
+    if (profileError) {
+      alert("プロフィールの作成に失敗しました。もう一度お試しください。");
+      return;
+    }
+
     router.push("/select");
   };
 

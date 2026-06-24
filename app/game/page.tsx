@@ -66,7 +66,7 @@ export default function GamePage() {
       endGame();
 
       const saveScore = async () => {
-        await fetch("api/scores", {
+        await fetch("/api/scores", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

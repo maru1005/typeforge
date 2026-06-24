@@ -1,4 +1,5 @@
 // app/components/logout-button.tsx
+// ログアウトボタン
 
 "use client";
 
@@ -10,7 +11,11 @@ export default function LogoutButton() {
 
   const handleLogout = async () => {
     const supabase = createClient();
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      alert("ログアウトに失敗しました")
+      return;
+    }
     router.push("/login");
   };
 
